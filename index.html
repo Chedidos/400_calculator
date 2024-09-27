@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tarneeb 400 Score Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .team-container {
+            display: flex;
+            justify-content: space-around;
+            margin: 20px 0;
+        }
+        .team {
+            border: 1px solid #000;
+            padding: 20px;
+            width: 45%;
+        }
+        .team h2 {
+            text-align: center;
+        }
+        table {
+            width: 100%;
+            margin-bottom: 20px;
+        }
+        th, td {
+            padding: 10px;
+            text-align: center;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+        .result {
+            text-align: center;
+            font-size: 20px;
+        }
+        button {
+            display: block;
+            margin: 10px auto;
+            padding: 10px 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Tarneeb 400 Score Calculator</h1>
+
+    <div class="team-container">
+        <!-- Team 1 -->
+        <div class="team">
+            <h2>Team 1</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Player</th>
+                        <th>Bid</th>
+                        <th>Tricks Won</th>
+                        <th>Score</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Player 1</td>
+                        <td><input type="number" id="bid1" min="2" max="13"></td>
+                        <td><input type="number" id="tricksWon1" min="0" max="13"></td>
+                        <td><span id="score1">0</span></td>
+                    </tr>
+                    <tr>
+                        <td>Player 2</td>
+                        <td><input type="number" id="bid2" min="2" max="13"></td>
+                        <td><input type="number" id="tricksWon2" min="0" max="13"></td>
+                        <td><span id="score2">0</span></td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="result">Total Score: <span id="team1Score">0</span></div>
+        </div>
+
+        <!-- Team 2 -->
+        <div class="team">
+            <h2>Team 2</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Player</th>
+                        <th>Bid</th>
+                        <th>Tricks Won</th>
+                        <th>Score</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Player 3</td>
+                        <td><input type="number" id="bid3" min="2" max="13"></td>
+                        <td><input type="number" id="tricksWon3" min="0" max="13"></td>
+                        <td><span id="score3">0</span></td>
+                    </tr>
+                    <tr>
+                        <td>Player 4</td>
+                        <td><input type="number" id="bid4" min="2" max="13"></td>
+                        <td><input type="number" id="tricksWon4" min="0" max="13"></td>
+                        <td><span id="score4">0</span></td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="result">Total Score: <span id="team2Score">0</span></div>
+        </div>
+    </div>
+
+    <button onclick="calculateScores()">Calculate Scores</button>
+
+    <script>
+        const scoringTable = {
+            2: 2, 3: 3, 4: 4, 5: 10, 6: 12, 7: 14, 8: 16, 9: 27, 10: 40, 11: 40, 12: 40, 13: 40
+        };
+
+        const highScoreTable = {
+            2: 2, 3: 3, 4: 4, 5: 5, 6: 6, 7: 14, 8: 16, 9: 27, 10: 40, 11: 40, 12: 40, 13: 40
+        };
+
+        function calculatePlayerScore(bid, tricksWon, playerScore) {
+            if (tricksWon >= bid) {
+                return bid >= 30 ? highScoreTable[bid] : scoringTable[bid];
+            } else {
+                return -scoringTable[bid];
+            }
+        }
+
+        function calculateScores() {
+            let team1Score = 0;
+            let team2Score = 0;
+
+            // Team 1 (Player 1 and Player 2)
+            const bid1 = parseInt(document.getElementById('bid1').value) || 0;
+            const tricksWon1 = parseInt(document.getElementById('tricksWon1').value) || 0;
+            const score1 = calculatePlayerScore(bid1, tricksWon1);
+            document.getElementById('score1').innerText = score1;
+            team1Score += score1;
+
+            const bid2 = parseInt(document.getElementById('bid2').value) || 0;
+            const tricksWon2 = parseInt(document.getElementById('tricksWon2').value) || 0;
+            const score2 = calculatePlayerScore(bid2, tricksWon2);
+            document.getElementById('score2').innerText = score2;
+            team1Score += score2;
+
+            // Team 2 (Player 3 and Player 4)
+            const bid3 = parseInt(document.getElementById('bid3').value) || 0;
+            const tricksWon3 = parseInt(document.getElementById('tricksWon3').value) || 0;
+            const score3 = calculatePlayerScore(bid3, tricksWon3);
+            document.getElementById('score3').innerText = score3;
+            team2Score += score3;
+
+            const bid4 = parseInt(document.getElementById('bid4').value) || 0;
+            const tricksWon4 = parseInt(document.getElementById('tricksWon4').value) || 0;
+            const score4 = calculatePlayerScore(bid4, tricksWon4);
+            document.getElementById('score4').innerText = score4;
+            team2Score += score4;
+
+            // Update team scores
+            document.getElementById('team1Score').innerText = team1Score;
+            document.getElementById('team2Score').innerText = team2Score;
+        }
+    </script>
+
+</body>
+</html>
